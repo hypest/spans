@@ -12,9 +12,11 @@ import android.graphics.Color;
 import android.graphics.EmbossMaskFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.AlignmentSpan;
 import android.text.style.BackgroundColorSpan;
@@ -40,8 +42,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,7 +54,7 @@ public class MainActivity extends Activity {
 
     private static String ANIMATED_WORD = "Im gonna be Animated!";
 
-    private TextView mText;
+    private EditText mText;
     private Button mBtnAnimateColor;
     private Button mBtnReset;
     private Button mBtnDraw1;
@@ -82,7 +84,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mText = (TextView) findViewById(R.id.text);
+        mText = (EditText) findViewById(R.id.text);
         mBtnAnimateColor = (Button) findViewById(R.id.btn_animate_color);
         mBtnDraw1 = (Button) findViewById(R.id.btn_draw1);
         mBtnDraw2 = (Button) findViewById(R.id.btn_draw2);
@@ -184,6 +186,23 @@ public class MainActivity extends Activity {
         });
 
         mSpinner.setAdapter(new ArrayAdapter<SpanType>(this, android.R.layout.simple_spinner_item, SpanType.values()));
+
+        mText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                Log.v("qwe", "before");
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.v("qwe", "changed");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.v("qwe", "after");
+            }
+        });
     }
 
     private void reset() {
